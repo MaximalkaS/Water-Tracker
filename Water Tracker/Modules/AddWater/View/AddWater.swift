@@ -4,6 +4,7 @@ import SwiftUI
 struct AddWater: View {
     
     @StateObject var viewModel = AddWaterViewModel()
+    @State private var selectedOptionID: String = WaterOption.medium.rawValue
     
     var body: some View {
         ScrollView {
@@ -34,7 +35,11 @@ struct AddWater: View {
                     
                     HStack(spacing: 15) {
                         ForEach(viewModel.waterOptions) { option in
-                            WaterOptionCard(option: option)
+                            WaterOptionCard(option: option, isSelected: selectedOptionID == option.id)
+                                .onTapGesture {
+                                    selectedOptionID = option.id
+                                }
+                                .animation(.smooth)
                         }
                     }
                 }

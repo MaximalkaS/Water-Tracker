@@ -4,6 +4,7 @@ import SwiftUI
 struct WaterOptionCard: View {
     
     let option: WaterOptionCardModel
+    let isSelected: Bool
     
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
@@ -25,12 +26,18 @@ struct WaterOptionCard: View {
         }
         .frame(maxWidth: .infinity)
         .frame(height: 170)
-        .background(.appWhite)
+        .background(isSelected ? .applightBlue : .appWhite)
         .cornerRadius(10)
+        .overlay {
+            if isSelected {
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(.appBlue, lineWidth: 2)
+            }
+        }
         .shadow(color: .black.opacity(0.07), radius: 4)
     }
 }
 
 #Preview {
-    WaterOptionCard(option: WaterOptionCardModel(id: "1",image: "smallDrinkImage", title: "Small", amount: 100))
+    WaterOptionCard(option: WaterOptionCardModel(id: "1",image: "smallDrinkImage", title: "Small", amount: 100), isSelected: false)
 }
