@@ -1,8 +1,9 @@
-//
-//  WaterOptionCardModel.swift
-//  Water Tracker
-//
-//  Created by Maximka on 09.04.2026.
-//
 
 import Foundation
+
+struct WaterOptionCardModel: Identifiable {
+    let id: String
+    let image: String
+    let title: String
+    let amount: Int
+}

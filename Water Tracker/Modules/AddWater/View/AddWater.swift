@@ -3,6 +3,8 @@ import SwiftUI
 
 struct AddWater: View {
     
+    @StateObject var viewModel = AddWaterViewModel()
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 30) {
@@ -31,8 +33,8 @@ struct AddWater: View {
                         .foregroundStyle(.appBlack)
                     
                     HStack(spacing: 15) {
-                        ForEach(0..<3) { _ in
-
+                        ForEach(viewModel.waterOptions) { option in
+                            WaterOptionCard(option: option)
                         }
                     }
                 }
