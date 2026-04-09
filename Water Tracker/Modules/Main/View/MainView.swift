@@ -2,8 +2,9 @@
 import SwiftUI
 
 struct MainView: View {
-
     
+    @StateObject var viewModel = MainViewModel()
+
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 50) {
@@ -17,7 +18,7 @@ struct MainView: View {
                         .foregroundStyle(.appBlack)
                 }
                 
-                WaterProgressRing(consumed: 1500, goal: 2500)
+                WaterProgressRing(consumed: viewModel.dailyIntake, goal: viewModel.goal)
                 
                 Button {
                     //
@@ -36,6 +37,7 @@ struct MainView: View {
             }
             .padding(.horizontal, 20)
         }
+        .background(.appBackground)
     }
 }
 

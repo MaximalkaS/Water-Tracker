@@ -5,7 +5,7 @@ import SwiftUI
 struct Water_TrackerApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+            AddWater()
         }
     }
 }
