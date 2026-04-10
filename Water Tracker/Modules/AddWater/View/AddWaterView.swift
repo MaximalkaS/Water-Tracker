@@ -1,7 +1,7 @@
 
 import SwiftUI
 
-struct AddWater: View {
+struct AddWaterView: View {
     
     @StateObject var viewModel = AddWaterViewModel()
     @State private var selectedOptionID: String = WaterOption.medium.rawValue
@@ -65,5 +65,5 @@ struct AddWater: View {
 }
 
 #Preview {
-    AddWater()
+    AddWaterView()
 }
