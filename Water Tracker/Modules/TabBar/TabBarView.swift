@@ -3,20 +3,21 @@ import SwiftUI
 
 struct TabBarView: View {
     
+    @Binding var path: NavigationPath
     @State private var selectedTab: TabItem = .main
     
     var body: some View {
         ZStack {
-            MainView()
+            MainView(path: $path)
                 .opacity(selectedTab == .main ? 1 : 0)
             
-            MainView()
+            MainView(path: $path)
                 .opacity(selectedTab == .statistics ? 1 : 0)
             
-            MainView()
+            MainView(path: $path)
                 .opacity(selectedTab == .history ? 1 : 0)
             
-            MainView()
+            MainView(path: $path)
                 .opacity(selectedTab == .setting ? 1 : 0)
         }
         .safeAreaInset(edge: .bottom) {
@@ -25,9 +26,5 @@ struct TabBarView: View {
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
     }
-}
-
-#Preview {
-    TabBarView()
 }
 

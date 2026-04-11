@@ -3,14 +3,20 @@ import SwiftUI
 
 struct AddWaterView: View {
     
+    @Binding var path: NavigationPath
     @StateObject var viewModel = AddWaterViewModel()
+    
     @State private var selectedOptionID: String = WaterOption.medium.rawValue
+    
+    private var selectedAmount: Int {
+        viewModel.waterOptions.first { $0.id == selectedOptionID }?.amount ?? 0
+    }
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 30) {
                 Button {
-                    //
+                    path.removeLast()
                 } label: {
                     Image(.backArrowIcon)
                         .resizable()
@@ -45,7 +51,8 @@ struct AddWaterView: View {
                 }
                 
                 Button {
-                    //
+                    path.removeLast()
+                    viewModel.addWaterAmount(selectedAmount)
                 } label: {
                     VStack {
                         Text("Add")
@@ -60,10 +67,11 @@ struct AddWaterView: View {
             }
             .padding(.horizontal, 20)
         }
+        .scrollBounceBehavior(.basedOnSize)
         .background(.appBackground)
+        
+        .navigationBarBackButtonHidden(true)
+        .toolbarBackground(.hidden, for: .navigationBar)
     }
 }
 
-#Preview {
-    AddWaterView()
-}

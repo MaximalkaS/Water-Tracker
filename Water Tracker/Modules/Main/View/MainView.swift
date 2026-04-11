@@ -3,6 +3,8 @@ import SwiftUI
 
 struct MainView: View {
     
+    @Binding var path: NavigationPath
+    
     @StateObject var viewModel = MainViewModel()
 
     var body: some View {
@@ -13,7 +15,7 @@ struct MainView: View {
                         .font(.headlinePrimary)
                         .foregroundStyle(.appBlack)
                     
-                    Text("Today, April 21")
+                    Text("Today, \(viewModel.dateString)")
                         .font(.headlineSub)
                         .foregroundStyle(.appBlack)
                 }
@@ -21,7 +23,7 @@ struct MainView: View {
                 WaterProgressRing(consumed: viewModel.dailyIntake, goal: viewModel.goal)
                 
                 Button {
-                    //
+                    path.append(WindowCase.addWater)
                 } label: {
                     VStack {
                         Text("Log Water")
@@ -35,12 +37,14 @@ struct MainView: View {
                 }
 
             }
+            
             .padding(.horizontal, 20)
         }
+        .scrollBounceBehavior(.basedOnSize)
         .background(.appBackground)
+        
+        .onAppear {
+            viewModel.reloadData()
+        }
     }
-}
-
-#Preview {
-    MainView()
 }

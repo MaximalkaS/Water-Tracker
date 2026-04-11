@@ -14,4 +14,12 @@ class AddWaterViewModel: ObservableObject {
     private func loadData() {
         waterOptions = WaterOptionMapper.makeCardModels(storage: storage)
     }
+    
+    func addWaterAmount(_ amount: Int) {
+        storage.dailyIntake += amount
+    }
+    
+    func getAmount(for option: WaterOption) -> Int {
+        storage.getAmount(for: option)
+    }
 }
