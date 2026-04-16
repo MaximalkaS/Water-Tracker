@@ -3,10 +3,7 @@ import Foundation
 import CoreData
 
 @objc(WaterEntry)
-public class WaterEntry: NSManagedObject {
-
-}
-
+public class WaterEntry: NSManagedObject { }
 
 extension WaterEntry {
 
@@ -14,10 +11,11 @@ extension WaterEntry {
         return NSFetchRequest<WaterEntry>(entityName: "WaterEntry")
     }
 
-    @NSManaged public var id: String?
+    @NSManaged public var id: String
+    @NSManaged public var dailyGoalAtMoment: Int64
     @NSManaged public var remaining: Int64
     @NSManaged public var amount: Int64
-    @NSManaged public var createdAt: Date?
+    @NSManaged public var createdAt: Date
 
 }
 

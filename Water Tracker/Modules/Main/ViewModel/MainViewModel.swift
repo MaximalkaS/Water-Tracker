@@ -4,7 +4,7 @@ import Foundation
 class MainViewModel: ObservableObject {
     @Published var dailyIntake: Double = 0
     @Published var goal: Double = 0
-    @Published var dateString: String = Date().formatted()
+    @Published var dateString: String = Date().formattedMonthDay()
     
     private let storage: WaterStorageProtocol
     

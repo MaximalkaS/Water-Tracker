@@ -5,11 +5,11 @@ import CoreData
 protocol CoreDataManagerProtocol: AnyObject {
     var waterEntries: [WaterEntry] { get }
     func fetchWaterEntries()
-    func addWaterEntry(for entry: WaterEntry)
+    func addWaterEntry(for entry: WaterEntryModel)
     func deleteWaterEntry(with id: String)
 }
 
-class CoreDataManager {
+class CoreDataManager: CoreDataManagerProtocol {
     
     static let shared = CoreDataManager()
     
@@ -25,7 +25,7 @@ class CoreDataManager {
         do {
             try viewContext.save()
         } catch {
-            print("Ошибка при сохранении: \(error.localizedDescription)")
+            print("Failed to save context: \(error.localizedDescription)")
         }
     }
     
@@ -40,12 +40,13 @@ class CoreDataManager {
         }
     }
     
-    func addWaterEntry(for entry: WaterEntry) {
+    func addWaterEntry(for entry: WaterEntryModel) {
         let newEntry = WaterEntry(context: viewContext)
-        newEntry.id = UUID().uuidString
-        newEntry.amount = entry.amount
-        newEntry.remaining = entry.remaining
-        newEntry.createdAt = Date()
+        newEntry.id = entry.id
+        newEntry.amount = Int64(entry.amount)
+        newEntry.remaining = Int64(entry.remaining)
+        newEntry.dailyGoalAtMoment = Int64(entry.dailyGoalAtMoment)
+        newEntry.createdAt = entry.createdAt
         
         saveContext()
         fetchWaterEntries()

@@ -11,10 +11,10 @@ struct TabBarView: View {
             MainView(path: $path)
                 .opacity(selectedTab == .main ? 1 : 0)
             
-            MainView(path: $path)
+            StatisticsView()
                 .opacity(selectedTab == .statistics ? 1 : 0)
             
-            MainView(path: $path)
+            HistoryView()
                 .opacity(selectedTab == .history ? 1 : 0)
             
             MainView(path: $path)

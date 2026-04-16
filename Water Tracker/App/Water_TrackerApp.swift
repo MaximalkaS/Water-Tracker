@@ -5,6 +5,7 @@ import SwiftUI
 struct Water_TrackerApp: App {
     
     @State var path = NavigationPath()
+    private let persistenceController = PersistenceController.shared
     
     var body: some Scene {
         WindowGroup {
@@ -20,6 +21,8 @@ struct Water_TrackerApp: App {
                         }
                     }
             }
+            .environment(\.managedObjectContext,
+                          persistenceController.container.viewContext)
         }
     }
 }
