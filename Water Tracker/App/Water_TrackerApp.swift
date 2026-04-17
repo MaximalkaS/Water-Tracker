@@ -3,9 +3,12 @@ import SwiftUI
 
 @main
 struct Water_TrackerApp: App {
+    @Environment(\.scenePhase) private var scenePhase
     
     @State var path = NavigationPath()
+    
     private let persistenceController = PersistenceController.shared
+    private let waterStorage = WaterStorage()
     
     var body: some Scene {
         WindowGroup {
@@ -23,6 +26,11 @@ struct Water_TrackerApp: App {
             }
             .environment(\.managedObjectContext,
                           persistenceController.container.viewContext)
+        }
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase == .active {
+                waterStorage.resetIfNeeded()
+            }
         }
     }
 }

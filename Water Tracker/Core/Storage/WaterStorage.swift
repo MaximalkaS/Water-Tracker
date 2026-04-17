@@ -18,6 +18,8 @@ class WaterStorage: WaterStorageProtocol {
         
         static let dailyIntake = "waterDailyIntake"
         static let dailyGoal = "waterDailyGoal"
+        
+        static let lastUpdatedAt = "waterLastUpdatedAt"
     }
     
     func getAmount(for option: WaterOption) -> Int {
@@ -34,9 +36,11 @@ class WaterStorage: WaterStorageProtocol {
     
     var dailyIntake: Int {
         get {
+            resetIfNeeded()
             return defaults.integer(forKey: Keys.dailyIntake)
         }
         set {
+            resetIfNeeded()
             defaults.set(newValue, forKey: Keys.dailyIntake)
         }
     }
@@ -48,6 +52,17 @@ class WaterStorage: WaterStorageProtocol {
         }
         set {
             defaults.set(newValue, forKey: Keys.dailyGoal)
+        }
+    }
+    
+    func resetIfNeeded() {
+        let calendar = Calendar.current
+        let now = Date()
+        let lastUpdatedAt = defaults.object(forKey: Keys.lastUpdatedAt) as? Date ?? now
+        
+        if !calendar.isDate(lastUpdatedAt, inSameDayAs: now) {
+            defaults.set(0, forKey: Keys.dailyIntake)
+            defaults.set(now, forKey: Keys.lastUpdatedAt)
         }
     }
     
