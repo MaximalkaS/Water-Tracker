@@ -5,6 +5,11 @@ struct HistoryItemRow: View {
     
     let item: WaterEntryModel
     
+    @State var dragOffSet = CGSize.zero
+    @State var position = CGSize.zero
+    
+    let action: () -> Void
+    
     var remainingWaterText: String {
         if item.dailyGoalAtMoment - item.remaining <= 0{
             return "The daily goal is completed"
@@ -42,5 +47,51 @@ struct HistoryItemRow: View {
         .background(.appWhite)
         .cornerRadius(10)
         .shadow(color: .black.opacity(0.07), radius: 4)
+        
+        .offset(x: dragOffSet.width + position.width)
+        .animation(.linear, value: dragOffSet)
+        .gesture(
+            DragGesture()
+                .onChanged { value in
+                    let translation = value.translation.width
+                    
+                    if translation < 100 {
+                        self.dragOffSet.width = translation
+                    } else {
+                        self.dragOffSet.width = 0
+                    }
+                }
+                .onEnded { value in
+                    if dragOffSet.width < -40 {
+                        position.width = -50
+                    } else {
+                        position.width = 0
+                    }
+
+                    if position.width > 0 {
+                        position.width = 0
+                    }
+                    
+                    dragOffSet = .zero
+                }
+        )
+        
+        .background(alignment: .trailing) {
+            Button {
+                action()
+            } label: {
+                Image(.deleteIcon)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20)
+                    .padding(10)
+                    .background(.appRed, in: .circle)
+            }
+
+        }
     }
+}
+
+#Preview {
+    HistoryItemRow(item: WaterEntryModel(id: "s", remaining: 123, amount: 100, dailyGoalAtMoment: 1500, createdAt: Date()), action: {})
 }

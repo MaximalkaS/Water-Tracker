@@ -8,7 +8,7 @@ struct Water_TrackerApp: App {
     @State var path = NavigationPath()
     
     private let persistenceController = PersistenceController.shared
-    private let waterStorage = WaterStorage()
+    @StateObject private var waterStorage = WaterStorage()
     
     var body: some Scene {
         WindowGroup {

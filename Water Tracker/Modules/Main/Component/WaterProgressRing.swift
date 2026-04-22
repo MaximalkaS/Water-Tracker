@@ -6,7 +6,8 @@ struct WaterProgressRing: View {
     let goal: Double
     
     var progress: Double {
-        consumed / goal
+        guard goal > 0 else { return 0 }
+        return min(consumed / goal, 1)
     }
     
     var body: some View {
@@ -38,6 +39,3 @@ struct WaterProgressRing: View {
     }
 }
 
-#Preview {
-    WaterProgressRing(consumed: 1100, goal: 2500)
-}

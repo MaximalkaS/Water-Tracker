@@ -6,6 +6,8 @@ struct MainView: View {
     @Binding var path: NavigationPath
     
     @StateObject var viewModel = MainViewModel()
+    
+    let selectedTab: TabItem
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -45,6 +47,12 @@ struct MainView: View {
         
         .onAppear {
             viewModel.reloadData()
+        }
+        
+        .onChange(of: selectedTab) { newValue in
+            if newValue == .main {
+                viewModel.reloadData()
+            }
         }
     }
 }

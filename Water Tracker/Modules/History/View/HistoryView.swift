@@ -26,7 +26,9 @@ struct HistoryView: View {
                         
                         VStack(alignment: .leading, spacing: 10) {
                             ForEach(history.items) { item in
-                                HistoryItemRow(item: item)
+                                HistoryItemRow(item: item) {
+                                    viewModel.deleteWaterEntry(item)
+                                }
                             }
                         }
                     }

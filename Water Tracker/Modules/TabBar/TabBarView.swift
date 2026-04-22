@@ -8,7 +8,7 @@ struct TabBarView: View {
     
     var body: some View {
         ZStack {
-            MainView(path: $path)
+            MainView(path: $path, selectedTab: selectedTab)
                 .opacity(selectedTab == .main ? 1 : 0)
             
             StatisticsView()
@@ -17,7 +17,7 @@ struct TabBarView: View {
             HistoryView()
                 .opacity(selectedTab == .history ? 1 : 0)
             
-            MainView(path: $path)
+            StatisticsView()
                 .opacity(selectedTab == .setting ? 1 : 0)
         }
         .safeAreaInset(edge: .bottom) {

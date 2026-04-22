@@ -10,15 +10,11 @@ class MainViewModel: ObservableObject {
     
     init(storage: WaterStorageProtocol = WaterStorage()) {
         self.storage = storage
-        loadData()
     }
     
-    private func loadData() {
+    func reloadData() {
         dailyIntake = Double(storage.dailyIntake)
         goal = Double(storage.dailyGoal)
     }
     
-    func reloadData() {
-        loadData()
-    }
 }

@@ -8,7 +8,7 @@ protocol WaterStorageProtocol: AnyObject {
     var dailyGoal: Int { get set }
 }
 
-class WaterStorage: WaterStorageProtocol {
+class WaterStorage: ObservableObject, WaterStorageProtocol {
     private let defaults = UserDefaults.standard
     
     private enum Keys {

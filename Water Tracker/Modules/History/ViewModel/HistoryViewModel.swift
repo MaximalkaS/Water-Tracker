@@ -5,9 +5,11 @@ class HistoryViewModel: ObservableObject {
     @Published var history: [HistoryModel] = []
     
     private let coreData: CoreDataManagerProtocol
+    private let storage: WaterStorageProtocol
     
-    init(coreData: CoreDataManagerProtocol = CoreDataManager.shared) {
+    init(coreData: CoreDataManagerProtocol = CoreDataManager.shared, storage: WaterStorageProtocol = WaterStorage()) {
         self.coreData = coreData
+        self.storage = storage
     }
     
     func loadData() {
@@ -35,6 +37,14 @@ class HistoryViewModel: ObservableObject {
                 }
             )
         }
+    }
+    
+    func deleteWaterEntry(_ entry: WaterEntryModel) {
+        coreData.deleteWaterEntry(with: entry.id)
+        if Calendar.current.isDateInToday(entry.createdAt) {
+            storage.dailyIntake = storage.dailyIntake - entry.amount
+        }
+        loadData()
     }
     
     private func title(_ date: Date) -> String {
