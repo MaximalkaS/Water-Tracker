@@ -17,7 +17,7 @@ struct TabBarView: View {
             HistoryView()
                 .opacity(selectedTab == .history ? 1 : 0)
             
-            StatisticsView()
+            SettingView()
                 .opacity(selectedTab == .setting ? 1 : 0)
         }
         .safeAreaInset(edge: .bottom) {
