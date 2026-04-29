@@ -20,4 +20,8 @@ class SettingViewModel: ObservableObject {
         storage.dailyGoal = limit
     }
     
+    func setAmount(_ amount: Int, for option: WaterOption) {
+        storage.setAmount(amount, for: option)
+    }
+    
 }

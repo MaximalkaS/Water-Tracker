@@ -13,7 +13,7 @@ struct WaterProgressRing: View {
     var body: some View {
         ZStack(alignment: .center) {
             Circle()
-                .stroke(.applightBlue, lineWidth: 15)
+                .stroke(.appLightBlue, lineWidth: 15)
             
             Circle()
                 .trim(from: 0, to: progress)

@@ -3,6 +3,7 @@ import SwiftUI
 
 struct SettingView: View {
     @State private var dailyGoal: String = ""
+    
     @FocusState private var isFocused: Bool
     
     @StateObject private var viewModel = SettingViewModel()
@@ -27,10 +28,27 @@ struct SettingView: View {
                                 .foregroundStyle(.appBlack)
                         }
                         
-                        ForEach(viewModel.waterOptions) { option in
-                            
+                        HStack {
+                            ForEach(Array($viewModel.waterOptions.enumerated()), id: \.element.id) { index, $option in
+                                
+                                WaterPortionSettingCard(option: $option, isFocused: $isFocused) {
+                                    viewModel.setAmount(option.amount, for: WaterOption.waterOption(option.id))
+                                }
+                                
+                                if index != viewModel.waterOptions.count - 1 {
+                                    Rectangle()
+                                        .frame(width: 1)
+                                        .frame(maxHeight: .infinity)
+                                        .foregroundColor(.appLightBlue)
+                                        .padding(.vertical, 5)
+                                }
+                            }
                         }
-                        
+                        .padding(.horizontal, 10)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(.appLightBlue, lineWidth: 1.5)
+                        }
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 15)

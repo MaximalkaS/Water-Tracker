@@ -26,7 +26,7 @@ struct WaterOptionCard: View {
         }
         .frame(maxWidth: .infinity)
         .frame(height: 170)
-        .background(isSelected ? .applightBlue : .appWhite)
+        .background(isSelected ? .appLightBlue : .appWhite)
         .cornerRadius(10)
         .overlay {
             if isSelected {
