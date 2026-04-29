@@ -78,17 +78,11 @@ struct SettingView: View {
             viewModel.setWaterDayLimit(1500)
             return
         }
-        
-        if limit == 0 {
-            dailyGoal = "1500"
-            viewModel.setWaterDayLimit(1500)
-        } else if limit < 1500 {
-            dailyGoal = "1500"
-            viewModel.setWaterDayLimit(1500)
-        } else {
-            dailyGoal = "\(limit)"
-            viewModel.setWaterDayLimit(limit)
-        }
+
+        let validLimit = min(max(limit, 1500), 5000)
+
+        dailyGoal = "\(validLimit)"
+        viewModel.setWaterDayLimit(validLimit)
     }
 }
 

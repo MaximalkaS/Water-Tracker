@@ -55,6 +55,9 @@ struct WaterPortionSettingCard: View {
                     .padding(.leading, 10)
                     .focused($isFocused)
                     .keyboardType(.numberPad)
+                    .onChange(of: option.amount) { newValue in
+                        //
+                    }
                     
                     VStack {
                         Text("ml")
@@ -90,6 +93,17 @@ struct WaterPortionSettingCard: View {
             return min(max(amount, 200), 300)
         case .large:
             return min(max(amount, 300), 500)
+        }
+    }
+    
+    private func maxAllowedAmount(for option: WaterOption) -> Int {
+        switch option {
+        case .small:
+            return 200
+        case .medium:
+            return 300
+        case .large:
+            return 500
         }
     }
 }
