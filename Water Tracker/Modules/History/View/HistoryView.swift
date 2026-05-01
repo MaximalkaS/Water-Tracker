@@ -29,6 +29,7 @@ struct HistoryView: View {
                                 HistoryItemRow(item: item) {
                                     viewModel.deleteWaterEntry(item)
                                 }
+                                .transition(.move(edge: .trailing))
                             }
                         }
                     }

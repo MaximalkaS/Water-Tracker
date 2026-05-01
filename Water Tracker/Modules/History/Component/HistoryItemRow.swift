@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 struct HistoryItemRow: View {
@@ -50,26 +49,40 @@ struct HistoryItemRow: View {
         
         .offset(x: dragOffSet.width + position.width)
         .animation(.linear, value: dragOffSet)
-        .gesture(
-            DragGesture()
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 25, coordinateSpace: .local)
                 .onChanged { value in
-                    let translation = value.translation.width
+                    let horizontal = value.translation.width
+                    let vertical = value.translation.height
                     
-                    if translation < 100 {
-                        self.dragOffSet.width = translation
+                    guard abs(horizontal) > abs(vertical) else {
+                        dragOffSet = .zero
+                        return
+                    }
+                    
+                    if horizontal < 0 {
+                        dragOffSet.width = horizontal
+                    } else if position.width < 0 {
+                        dragOffSet.width = min(horizontal, abs(position.width))
                     } else {
-                        self.dragOffSet.width = 0
+                        dragOffSet.width = 0
                     }
                 }
                 .onEnded { value in
-                    if dragOffSet.width < -40 {
-                        position.width = -50
-                    } else {
-                        position.width = 0
+                    let horizontal = value.translation.width
+                    let vertical = value.translation.height
+                    
+                    guard abs(horizontal) > abs(vertical) else {
+                        dragOffSet = .zero
+                        return
                     }
-
-                    if position.width > 0 {
-                        position.width = 0
+                    
+                    withAnimation(.easeOut) {
+                        if horizontal < -40 {
+                            position.width = -50
+                        } else {
+                            position.width = 0
+                        }
                     }
                     
                     dragOffSet = .zero
