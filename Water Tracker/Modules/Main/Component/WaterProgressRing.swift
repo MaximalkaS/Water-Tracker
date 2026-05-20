@@ -35,7 +35,7 @@ struct WaterProgressRing: View {
                     .foregroundStyle(.appBlack)
             }
         }
-        .padding(.horizontal, 20)
+        //.padding(.horizontal, 20)
     }
 }
 

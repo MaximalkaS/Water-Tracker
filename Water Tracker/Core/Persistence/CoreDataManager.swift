@@ -5,6 +5,7 @@ import CoreData
 protocol CoreDataManagerProtocol: AnyObject {
     var waterEntries: [WaterEntry] { get }
     func fetchWaterEntries()
+    func fetchWaterEntries(from startDate: Date, to endDate: Date) -> [WaterEntry]
     func addWaterEntry(for entry: WaterEntryModel)
     func deleteWaterEntry(with id: String)
 }
@@ -37,6 +38,27 @@ class CoreDataManager: CoreDataManagerProtocol {
             self.waterEntries = waterEntries
         } catch {
             print("Failure to fetch water entries: \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchWaterEntries(from startDate: Date, to endDate: Date) -> [WaterEntry] {
+        let request = WaterEntry.fetchRequest()
+        
+        request.predicate = NSPredicate(
+            format: "createdAt >= %@ AND createdAt < %@",
+            startDate as NSDate,
+            endDate as NSDate
+        )
+        
+        request.sortDescriptors = [
+            NSSortDescriptor(key: "createdAt", ascending: true)
+        ]
+        
+        do {
+            return try viewContext.fetch(request)
+        } catch {
+            print("Ошибка загрузки записей за неделю: \(error.localizedDescription)")
+            return []
         }
     }
     

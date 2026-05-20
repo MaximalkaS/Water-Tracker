@@ -6,7 +6,7 @@ struct WeekBarRow: View {
     let dailyGoal: Int
     let day: String
 
-    private let barHeight: CGFloat = 300
+    private let barHeight: CGFloat = 400
 
     private var progress: CGFloat {
         guard dailyGoal > 0 else { return 0 }

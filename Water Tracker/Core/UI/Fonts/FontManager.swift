@@ -19,6 +19,7 @@ extension Font {
 
     static let bodyRegular = Font.custom(PoppinsFontName.regular.rawValue, size: 14)
     static let bodySemiBold = Font.custom(PoppinsFontName.semibold.rawValue, size: 14)
+    static let bodyLight = Font.custom(PoppinsFontName.light.rawValue, size: 14)
     static let bodyCaption = Font.custom(PoppinsFontName.regular.rawValue, size: 11)
     
     static let weekdayLabel = Font.custom(PoppinsFontName.regular.rawValue, size: 10)

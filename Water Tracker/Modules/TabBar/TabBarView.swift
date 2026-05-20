@@ -11,7 +11,7 @@ struct TabBarView: View {
             MainView(path: $path, selectedTab: selectedTab)
                 .opacity(selectedTab == .main ? 1 : 0)
             
-            StatisticsView()
+            StatisticsView(selectedTab: selectedTab)
                 .opacity(selectedTab == .statistics ? 1 : 0)
             
             HistoryView()
@@ -20,9 +20,11 @@ struct TabBarView: View {
             SettingView()
                 .opacity(selectedTab == .setting ? 1 : 0)
         }
-        .safeAreaInset(edge: .bottom) {
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .overlay(alignment: .bottom) {
             CustomTabBar(selectedTab: $selectedTab)
                 .padding(.horizontal, 20)
+                .padding(.bottom, 8)
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
     }

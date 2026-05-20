@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 struct MainView: View {
@@ -35,13 +34,15 @@ struct MainView: View {
                     .frame(maxWidth: .infinity)
                     .frame(height: 40)
                     .background(.appBlue)
-                    .cornerRadius(10)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
+                .buttonStyle(.plain)
 
             }
-            
+            .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 20)
         }
+        .contentMargins(.horizontal, 0, for: .scrollContent)
         .scrollBounceBehavior(.basedOnSize)
         .background(.appBackground)
         
