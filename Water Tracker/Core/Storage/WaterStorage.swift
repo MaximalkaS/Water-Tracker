@@ -58,7 +58,11 @@ class WaterStorage: ObservableObject, WaterStorageProtocol {
     func resetIfNeeded() {
         let calendar = Calendar.current
         let now = Date()
-        let lastUpdatedAt = defaults.object(forKey: Keys.lastUpdatedAt) as? Date ?? now
+        
+        guard let lastUpdatedAt = defaults.object(forKey: Keys.lastUpdatedAt) as? Date else {
+            defaults.set(now, forKey: Keys.lastUpdatedAt)
+            return
+        }
         
         if !calendar.isDate(lastUpdatedAt, inSameDayAs: now) {
             defaults.set(0, forKey: Keys.dailyIntake)
@@ -88,4 +92,3 @@ class WaterStorage: ObservableObject, WaterStorageProtocol {
         }
     }
 }
-

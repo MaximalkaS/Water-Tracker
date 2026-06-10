@@ -30,6 +30,13 @@ struct WeekWaterMapper {
             }
             
             let dayEntries = entries
+                .compactMap { entry -> (createdAt: Date, amount: Int64, dailyGoalAtMoment: Int64)? in
+                    guard let createdAt = entry.createdAt else {
+                        return nil
+                    }
+                    
+                    return (createdAt, entry.amount, entry.dailyGoalAtMoment)
+                }
                 .filter { entry in
                     entry.createdAt >= startOfDay && entry.createdAt < endOfDay
                 }

@@ -66,9 +66,17 @@ struct SettingView: View {
             isFocused = false
             validation()
         }
+        .onChange(of: isFocused) { focused in
+            if !focused {
+                validation()
+            }
+        }
         .onAppear {
             viewModel.reloadData()
             dailyGoal = "\(viewModel.waterDayLimit)"
+        }
+        .onDisappear {
+            validation()
         }
     }
     

@@ -14,7 +14,21 @@ class HistoryViewModel: ObservableObject {
     
     func loadData() {
         coreData.fetchWaterEntries()
-        let groupedHistory = Dictionary(grouping: coreData.waterEntries) { item in
+        let validEntries = coreData.waterEntries.compactMap { entry -> WaterEntryModel? in
+            guard let id = entry.id, let createdAt = entry.createdAt else {
+                return nil
+            }
+            
+            return WaterEntryModel(
+                id: id,
+                remaining: Int(entry.remaining),
+                amount: Int(entry.amount),
+                dailyGoalAtMoment: Int(entry.dailyGoalAtMoment),
+                createdAt: createdAt
+            )
+        }
+        
+        let groupedHistory = Dictionary(grouping: validEntries) { item in
             Calendar.current.startOfDay(for: item.createdAt)
         }
         
@@ -26,15 +40,7 @@ class HistoryViewModel: ObservableObject {
             return HistoryModel(
                 id: UUID().uuidString,
                 date: title(date),
-                items: sortedEntries.map { entry in
-                    WaterEntryModel(
-                        id: entry.id,
-                        remaining: Int(entry.remaining),
-                        amount: Int(entry.amount),
-                        dailyGoalAtMoment: Int(entry.dailyGoalAtMoment),
-                        createdAt: entry.createdAt
-                    )
-                }
+                items: sortedEntries
             )
         }
     }
