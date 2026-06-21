@@ -36,7 +36,8 @@ struct HistoryView: View {
                 }
             }
             .padding(.horizontal, 20)
-            .frame(maxWidth: .infinity)
+            .padding(.bottom, 88)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .scrollBounceBehavior(.basedOnSize)
         .background(.appBackground)
